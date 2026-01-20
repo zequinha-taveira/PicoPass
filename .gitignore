@@ -1,0 +1,31 @@
+# Rust
+/app/src-tauri/target
+/target
+**/*.rs.bk
+Cargo.lock
+
+# Node
+node_modules
+dist
+.env
+
+# Mobile
+/app-mobile/android
+/app-mobile/ios
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv
+env/
+venv/
+ENV/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Pico
+/firmware/builds/*
+!/firmware/builds/.gitkeep

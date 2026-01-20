@@ -1,0 +1,34 @@
+{
+    "raspberry_pi_pico": {
+        "name": "Raspberry Pi Pico",
+        "vid": 11914,
+        "pid": 5,
+        "led_pin": 25,
+        "button_pin": 15,
+        "has_rgb": false
+    },
+    "raspberry_pi_pico_w": {
+        "name": "Raspberry Pi Pico W",
+        "vid": 11914,
+        "pid": 5,
+        "led_pin": "WL_GPIO0",
+        "button_pin": 15,
+        "has_rgb": false
+    },
+    "esp32_s3": {
+        "name": "ESP32-S3 Generic",
+        "vid": 12346,
+        "pid": 1,
+        "led_pin": 48,
+        "button_pin": 0,
+        "has_rgb": true
+    },
+    "raspberry_pi_rp2350": {
+        "name": "Raspberry Pi RP2350",
+        "vid": 11914,
+        "pid": 15,
+        "led_pin": 25,
+        "button_pin": 15,
+        "has_rgb": false
+    }
+}
