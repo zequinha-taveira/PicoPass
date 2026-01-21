@@ -1,12 +1,12 @@
 // firmware/c/src/crypto.c
 
 #include "crypto.h"
+#include "config.h"
 #include "mbedtls/aes.h"
 #include "mbedtls/sha256.h"
 #include "pico/rand.h"
 #include <stdio.h>
 #include <string.h>
-
 
 static mbedtls_aes_context aes_ctx;
 static uint8_t derived_key[32];

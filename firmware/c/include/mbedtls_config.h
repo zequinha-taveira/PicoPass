@@ -10,10 +10,11 @@
 #define MBEDTLS_AES_C
 #define MBEDTLS_SHA256_C
 #define MBEDTLS_CIPHER_C
+#define MBEDTLS_CIPHER_MODE_CBC
 
 /* Optimization */
 #define MBEDTLS_AES_ROM_TABLES
 
-#include <mbedtls/check_config.h>
+/* #include <mbedtls/check_config.h> Not needed manually */
 
 #endif
