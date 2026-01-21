@@ -2,7 +2,7 @@
   import { fade, fly, scale } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
   import { invoke } from '@tauri-apps/api/tauri';
-  import { isLocked, passwords, status, masterPassword, loading } from '../stores/vault';
+  import { isLocked, passwords, status, masterPassword, loading, isActivated } from '../stores/vault';
 
   let lockoutRemaining = 0;
   let lockoutInterval: any;
@@ -17,6 +17,7 @@
       const devices = await invoke('list_serial_ports') as any[];
       if (devices.length > 0) {
         $status = `Connected: ${devices[0].name}`;
+        $isActivated = devices[0].is_activated;
       } else {
         $status = "Vault Unlocked (No Hardware)";
       }

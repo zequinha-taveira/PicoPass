@@ -5,9 +5,9 @@ import sys
 import uselect
 import rp2
 import gc
-from keyboard import PicoPassHID
-from display_manager import PicoPassDisplay
 from ble_hid import BLEKeyboard
+from display_manager import PicoPassDisplay
+from license import LicenseManager
 
 class PicoPassDevice:
     def __init__(self, led_pin=25, btn_pin=15, sda_pin=16, scl_pin=17):
@@ -27,8 +27,10 @@ class PicoPassDevice:
         self.hid = PicoPassHID()
         self.display = PicoPassDisplay(scl_pin=self.pins["scl"], sda_pin=self.pins["sda"])
         self.ble = BLEKeyboard(name="PicoPass-Pro")
+        self.license = LicenseManager()
         
         # State
+        self.activated = self.license.verify_license()
         self.locked = True
         self.pending_password = None
         
@@ -49,8 +51,23 @@ class PicoPassDevice:
             if not line: return
             
             if line == "PING":
-                print("PONG")
+                status = "ACTIVATED" if self.activated else "NOT_ACTIVATED"
+                print(f"PONG|{status}|{self.license.board_id}|{self.license.board_type}")
+            elif line.startswith("ACTIVATE:"):
+                key = line[9:].strip()
+                if self.license._calculate_key(self.license.board_id, self.license.board_type) == key:
+                    self.license.save_license(key)
+                    self.activated = True
+                    print("ACTIVATION_SUCCESS")
+                    self.display.show_status("SUCCESS", "Activated!")
+                else:
+                    print("ACTIVATION_FAILED")
+                    self.display.show_status("ERROR", "Invalid Key")
             elif line.startswith("TYPE:"):
+                if not self.activated:
+                    print("ERROR_NOT_ACTIVATED")
+                    self.display.show_status("LOCKED", "Activate First")
+                    return
                 # Protocol: TYPE:password_content|service_name
                 parts = line[5:].split('|')
                 self.pending_password = parts[0]

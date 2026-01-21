@@ -11,5 +11,6 @@ export interface PasswordEntry {
 export const isLocked = writable(true);
 export const passwords = writable<PasswordEntry[]>([]);
 export const status = writable("Device: Disconnected");
+export const isActivated = writable(false);
 export const masterPassword = writable("");
 export const loading = writable(false);

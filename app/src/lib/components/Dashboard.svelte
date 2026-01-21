@@ -3,7 +3,7 @@
   import { fade, fly, slide } from 'svelte/transition';
   import { flip } from 'svelte/animate';
   import { cubicInOut } from 'svelte/easing';
-  import { passwords, isLocked, status } from '../stores/vault';
+  import { passwords, isLocked, status, isActivated } from '../stores/vault';
   import AddPasswordModal from './AddPasswordModal.svelte';
   import Settings from './Settings.svelte';
 
@@ -43,6 +43,11 @@
       <div class="status-badge { $status.includes('Connected') ? 'online' : '' }">
         <span class="pulse-dot"></span>
         { $status }
+        {#if $status.includes('Connected')}
+          <span class="license-tag { $isActivated ? 'active' : 'pending' }">
+            { $isActivated ? 'PRO' : 'FREE' }
+          </span>
+        {/if}
       </div>
       <div class="divider"></div>
       <button class="nav-btn" on:click={() => showSettings = true} aria-label="Settings">⚙️</button>
@@ -157,6 +162,16 @@
   }
 
   .status-badge.online { color: var(--text-success); }
+
+  .license-tag {
+    font-size: 0.6rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-weight: 900;
+    margin-left: 0.5rem;
+  }
+  .license-tag.active { background: var(--primary); color: white; }
+  .license-tag.pending { background: #f59e0b; color: black; }
 
   .pulse-dot {
     width: 6px;
