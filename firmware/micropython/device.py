@@ -55,11 +55,11 @@ class PicoPassDevice:
                 print(f"PONG|{status}|{self.license.board_id}|{self.license.board_type}")
             elif line.startswith("ACTIVATE:"):
                 key = line[9:].strip()
-                if self.license._calculate_key(self.license.board_id, self.license.board_type) == key:
+                if self.license._calculate_key(self.license.board_type) == key:
                     self.license.save_license(key)
                     self.activated = True
                     print("ACTIVATION_SUCCESS")
-                    self.display.show_status("SUCCESS", "Activated!")
+                    self.display.show_status("SUCCESS", "Profile Active")
                 else:
                     print("ACTIVATION_FAILED")
                     self.display.show_status("ERROR", "Invalid Key")

@@ -58,16 +58,16 @@ pub fn find_pico() -> Option<DeviceInfo> {
                 }
             }
 
-            // Se não estiver ativado mas tivermos o serial, tentamos ativar automaticamente
-            if !device.is_activated && device.serial_number.is_some() {
-                if let Some(key) = generate_license_key(device.serial_number.as_ref().unwrap(), &device.board_type) {
+            // Se não estiver ativado, tentamos ativar automaticamente usando a licença do perfil
+            if !device.is_activated {
+                if let Some(key) = generate_profile_license_key(&device.board_type) {
                     if let Ok(mut port) = serialport::new(&p.port_name, 115_200)
                         .timeout(Duration::from_millis(1000))
                         .open() 
                     {
                         let command = format!("ACTIVATE:{}\n", key);
                         let _ = port.write_all(command.as_bytes());
-                        device.is_activated = true; // Assume sucesso para a UI, o firmware confirmará no próximo PING
+                        device.is_activated = true; 
                     }
                 }
             }
@@ -78,10 +78,12 @@ pub fn find_pico() -> Option<DeviceInfo> {
     None
 }
 
-fn generate_license_key(serial: &str, board_type: &str) -> Option<String> {
+fn generate_profile_license_key(board_type: &str) -> Option<String> {
     use sha2::{Sha256, Digest};
-    let secret_salt = "PicoPass_Secure_2026";
-    let data = format!("{}:{}:{}", serial, board_type, secret_salt);
+    // O App agora gera a chave baseada no perfil de hardware
+    // Em uma versão real, isso verificaria se o usuário comprou a licença para este board_type
+    let secret_salt = "PicoPass_Profile_Secure_2026";
+    let data = format!("{}:{}", board_type, secret_salt);
     let mut hasher = Sha256::new();
     hasher.update(data.as_bytes());
     let result = hasher.finalize();

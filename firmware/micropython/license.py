@@ -33,13 +33,13 @@ class LicenseManager:
         return f"ACT_REQ:{self.board_id}|{self.board_type}"
 
     def verify_license(self):
-        """Verifica se a licença atual é válida para este hardware."""
+        """Verifica se a licença atual é válida para este tipo de placa."""
         try:
             with open(self.license_file, "r") as f:
                 license_key = f.read().strip()
             
-            # A licença é um hash do ID + Tipo + Salt Secreto
-            expected = self._calculate_key(self.board_id, self.board_type)
+            # Agora a licença é baseada APENAS no tipo de placa
+            expected = self._calculate_key(self.board_type)
             return license_key == expected
         except:
             return False
@@ -49,9 +49,10 @@ class LicenseManager:
         with open(self.license_file, "w") as f:
             f.write(key)
 
-    def _calculate_key(self, board_id, board_type):
-        """Algoritmo de validação (deve ser o mesmo no App)."""
-        secret_salt = "PicoPass_Secure_2026"
-        data = f"{board_id}:{board_type}:{secret_salt}"
+    def _calculate_key(self, board_type):
+        """Algoritmo de validação baseado no perfil de hardware."""
+        secret_salt = "PicoPass_Profile_Secure_2026"
+        # Removemos o board_id da equação para permitir múltiplos dispositivos do mesmo tipo
+        data = f"{board_type}:{secret_salt}"
         hash_obj = hashlib.sha256(data.encode())
-        return binascii.hexlify(hash_obj.digest()).decode()[:16] # Chave de 16 chars
+        return binascii.hexlify(hash_obj.digest()).decode()[:16]
