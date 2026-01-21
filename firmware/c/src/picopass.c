@@ -6,9 +6,9 @@
 #include "flash_storage.h"
 #include "led.h"
 #include "usb_hid.h"
+#include <pico/stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
 
 void picopass_init(picopass_device_t *dev, const char *board_id) {
   memset(dev, 0, sizeof(picopass_device_t));
