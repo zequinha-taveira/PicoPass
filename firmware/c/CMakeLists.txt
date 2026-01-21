@@ -44,8 +44,8 @@ target_link_libraries(picopass
 )
 
 # USB output
-pico_enable_stdio_usb(picopass 1)
-pico_enable_stdio_uart(picopass 0)
+pico_enable_stdio_usb(picopass 0)
+pico_enable_stdio_uart(picopass 1)
 
 # Create UF2
 pico_add_extra_outputs(picopass)
