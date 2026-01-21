@@ -24,7 +24,7 @@ add_executable(picopass
 )
 
 # Include directories
-target_include_directories(picopass PRIVATE
+target_include_directories(picopass BEFORE PRIVATE
     ${CMAKE_SOURCE_DIR}/include
 )
 

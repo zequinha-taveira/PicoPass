@@ -43,13 +43,17 @@ extern "C" {
 
 // Enabled classes
 #define CFG_TUD_HID 1
-#define CFG_TUD_CDC 0
+#define CFG_TUD_CDC 1
 #define CFG_TUD_MSC 0
 #define CFG_TUD_MIDI 0
 #define CFG_TUD_VENDOR 0
 
 // HID buffer size (must be sufficient to hold report)
 #define CFG_TUD_HID_EP_BUFSIZE 64
+
+// CDC FIFO size
+#define CFG_TUD_CDC_RX_BUFSIZE 64
+#define CFG_TUD_CDC_TX_BUFSIZE 64
 
 #ifdef __cplusplus
 }
