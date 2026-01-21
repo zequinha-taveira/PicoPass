@@ -21,6 +21,7 @@ add_executable(picopass
     src/button.c
     src/flash_storage.c
     src/serial.c
+    usb_descriptors.c
 )
 
 # Include directories
