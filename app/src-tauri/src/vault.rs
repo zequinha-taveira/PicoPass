@@ -76,9 +76,10 @@ impl Vault {
         let mut key = [0u8; 32];
         let salt_str = SaltString::encode_b64(salt).unwrap();
         
-        // Zeroize password after use if possible (though it's a &str here)
-        let hash = argon2.hash_password(password.as_bytes(), &salt_str).unwrap().hash().unwrap();
-        key.copy_from_slice(&hash.as_bytes()[..32]);
+        // Hash the password and extract the hash bytes
+        let password_hash = argon2.hash_password(password.as_bytes(), &salt_str).unwrap();
+        let hash_output = password_hash.hash.unwrap();
+        key.copy_from_slice(&hash_output.as_bytes()[..32]);
         
         Zeroizing::new(key)
     }
