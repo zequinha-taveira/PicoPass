@@ -10,8 +10,8 @@ Write-Host "Building Docker image..." -ForegroundColor Cyan
 docker build -t picopass-builder .
 
 # Run the container to build the firmware
-Write-Host "Compiling firmware..." -ForegroundColor Cyan
+Write-Host "Compiling firmware for RP2350..." -ForegroundColor Cyan
 $currentDir = Get-Location
-docker run --rm -v "${currentDir}/..:/workspace" picopass-builder
+docker run --rm -v "${currentDir}/..:/workspace" -e PICO_BOARD=pico2 -e PICO_PLATFORM=rp2350 picopass-builder
 
 Write-Host "Build complete. Check firmware/c/build for .uf2 files." -ForegroundColor Green
