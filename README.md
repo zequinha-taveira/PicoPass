@@ -3,7 +3,7 @@
 > The open-source, hardware-backed secure password vault for Raspberry Pi Pico.
 
 **Status:** ✅ Stable Release  
-**License:** [MIT](LICENSE)
+**License:** [MIT](LICENSE) | **Philosophy:** [Gratuita e Aberta - Sempre](MANIFESTO.md)
 
 PicoPass is a high-security password manager that stores your encrypted vault on your PC but requires a physical Raspberry Pi Pico device to auto-type passwords with a button press. This prevents software-only attacks and provides a physical layer of security.
 
