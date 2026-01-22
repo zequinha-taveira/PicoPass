@@ -9,8 +9,8 @@ PicoPass is a high-security password manager that stores your encrypted vault on
 
 ## 📋 Project Overview
 
-- **Desktop App:** Tauri + Svelte + Rust
-- **Firmware:** MicroPython + C/C++
+- **Desktop App:** Tauri + Svelte + Rust (Supports firmware compilation and configuration)
+- **Firmware:** Open-source MicroPython + C/C++ (Can be built and configured via the app)
 - **Encryption:** AES-256-GCM
 - **HID:** USB Auto-Type
 
